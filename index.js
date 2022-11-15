@@ -5,6 +5,7 @@ const Users=require("./utils/users")
 const Chats=require("./utils/chats") 
 app.use(express.static("www"))
 app.use(express.json())
+app.use(express.urlencoded({extended:false}))
 
 app.engine('mustache',mustacheExpress())  //Define las vistas de mustache
 app.set('view engine','mustache')
@@ -28,10 +29,27 @@ app.get("/pruebas", (req, res) => {
     res.render("homePage", {nombre: "Juan", apellido: "Perez"})
 })
 
+app.get("/register", (req, res) => {
+    res.render("registro")
+})
+
+app.get("/homePage", (req, res) => {
+    res.render("homePage")
+})
+
+app.get("/chat", (req, res) => {
+    res.render("chat")
+})
+
+app.get("/login", (req, res) => {
+    res.render("login")
+})
+
 // registrar usuario
 app.post('/register', (req, res) => {
-    const {name, password} = req.body;
-    const {error, user} = usuarios.addUser(name, password);
+    const {username, password} = req.body;
+    console.log(username, password);
+    const {error, user} = usuarios.addUser(new Date().getTime(),username, password);
     if(error){
         res.status(400).send({error: true, message: 'Username and password are required!'})
     }
