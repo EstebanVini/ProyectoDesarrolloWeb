@@ -30,6 +30,19 @@ class Chat {
         return {error: true, message: 'Chat not found'}   
     }
 
+    removeUserFromChat(id, user){
+        const chat = this.chats.find((chat) => chat.id === id);
+        if(chat){
+            const index = chat.users.findIndex((user) => user.name === name);
+            if(index !== -1){
+                chat.users.splice(index, 1)[0];
+                return {error: false, message: 'User removed from chat'}
+            }
+            return {error: true, message: 'User not found'}
+        }
+        return {error: true, message: 'Chat not found'}
+    }
+
     getChat(id){
         return this.chats.find((chat) => chat.id === id);
     }
@@ -39,6 +52,15 @@ class Chat {
         if(chat){
             chat.name = name;
             return {error: false, message: 'Chat name changed'}    
+        }
+        return {error: true, message: 'Chat not found'}   
+    }
+
+    sendMessage(id, mensaje){
+        const chat = this.chats.find((chat) => chat.id === id);
+        if(chat){
+            chat.messages.push(mensaje);
+            return {error: false, message: 'Message sent'}    
         }
         return {error: true, message: 'Chat not found'}   
     }
