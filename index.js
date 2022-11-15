@@ -4,16 +4,20 @@ const app=express()
 const Users=require("./utils/users") 
 const Chats=require("./utils/chats") 
 app.use(express.static("www"))
+<<<<<<< HEAD
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
+=======
+app.use(express.json())  
+>>>>>>> 6a4fc07e7622bf6097e70d7dcc8ebb5507a4041f
 
 app.engine('mustache',mustacheExpress())  //Define las vistas de mustache
 app.set('view engine','mustache')
 app.set('views',__dirname + '/vistas')
 
 usuarios = new Users();
-chats = new Chats();
-
+chats = new Chats(); 
+ 
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -21,12 +25,11 @@ app.get('/', (req, res) => {
 );
 
 app.get('login', (req, res) => {
-    res.render('login')
-     
+    res.render('login') 
 });
 
 app.get("/pruebas", (req, res) => {
-    res.render("homePage", {nombre: "Juan", apellido: "Perez"})
+    res.render("chats", {nombre: "Juan", apellido: "Perez"})
 })
 
 app.get("/register", (req, res) => {
