@@ -44,7 +44,7 @@ app.get("/login", (req, res) => {
 // registrar usuario
 app.post('/register', (req, res) => {
     const {username, password} = req.body;
-    const {error, user} = usuarios.addUser(new Date().getTime(),username, password);
+    const {error, user} = usuarios.addUser(username, password);
     if(error){
         res.status(400).send({error: true, message: 'Username and password are required!'})
     }
