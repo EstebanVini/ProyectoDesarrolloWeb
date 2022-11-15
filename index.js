@@ -1,10 +1,23 @@
-const express = require('express');
-const app = express();
+const express=require("express")
+const mustacheExpress=require("mustache-express")
+const app=express()
+app.use(express.static("www"))
+app.use(express.json())
+
+app.engine('mustache',mustacheExpress())  //Define las vistas de mustache
+app.set('view engine','mustache')
+app.set('views',__dirname + '/vistas')
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
     }
 );
+
+app.get('login', (req, res) => {
+    res.render('login')
+    
+});
 
 app.listen(3000, () => {
     console.log('Example app listening on port 3000!');
