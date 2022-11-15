@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/EstebanVini/ProyectoDesarrolloWeb/issues"
   },
-  "homepage": "https://github.com/EstebanVini/ProyectoDesarrolloWeb#readme"
+  "homepage": "https://github.com/EstebanVini/ProyectoDesarrolloWeb#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
