@@ -17,15 +17,14 @@ app.set('views',__dirname + '/vistas')
 
 usuarios = new Users();
 chats = new Chats(); 
+
+let currentUser = null; 
  
 
 
 
  
-app.get("/pruebas", (req, res) => {
-    res.render('chat', {chats: [{title: 'Chat 1', id: 1}, {title: 'Chat 2', id: 2}], userId:  1234432});  
-})             
- 
+
 app.get("/register", (req, res) => {
     res.render("registro")
 })
@@ -42,28 +41,34 @@ app.get("/login", (req, res) => {
     res.render("login")
 })
 
+app.get("chats", (req, res) => {
+    res.render("chats")
+})
+
 // registrar usuario
 app.post('/register', (req, res) => {
     const {username, password} = req.body;
     console.log(username, password);
-    const {error, user} = usuarios.addUser(new Date().getTime(),username, password);
+    const {error, user} = usuarios.addUser(username, password);
     if(error){
         res.status(400).send({error: true, message: 'Username and password are required!'})
     }
-    res.status(200).send({error: false, user});
+    res.render("homePage")
 });
 
 // iniciar sesion
 app.post('/login', (req, res) => {
-    const {name, password} = req.body;
-    const user = usuarios.getUser(name);
+    const {username, password} = req.body;
+    console.log(username, password)
+    const user = usuarios.getUser(username);
     if(!user){
-        res.status(400).send({error: true, message: 'User not found'})
-    }
+        return res.status(400).send({error: true, message: 'User not found'})
+    } 
     if(user.password !== password){
-        res.status(400).send({error: true, message: 'Password incorrect'})
+        return res.status(400).send({error: true, message: 'Password incorrect'})
     }
-    res.status(200).send({error: false, user});
+    currentUser = user;
+    return res.redirect("chats");
 });
 
 // eliminar usuario

@@ -3,11 +3,11 @@ class Users {
         this.users = [];
     }
 
-    addUser(id, name,  password){
+    addUser(name,  password){
         if(name.trim().length === 0 || password.trim().length === 0){
             return {error: true, message: 'Username and password are required!'}
         }
-        const user = {id, name, password, chats:[]};
+        const user = {name, password, chats:[]};
         this.users.push(user);
         return {error: false, user};
     }
@@ -31,8 +31,8 @@ class Users {
         return {error: true, message: 'User not found'}   
     }
 
-    getUser(id){
-        return this.users.find((user) => user.id === id);
+    getUser(name){
+        return this.users.find((user) => user.name === name);
     }
 
     changePassword(id, password){
