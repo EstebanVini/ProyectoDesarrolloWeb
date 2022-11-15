@@ -4,11 +4,8 @@ const app=express()
 const Users=require("./utils/users") 
 const Chats=require("./utils/chats") 
 app.use(express.static("www"))
-
 app.use(express.json())
 app.use(express.urlencoded({extended:false}))
-
-app.use(express.json())  
 
 
 app.engine('mustache',mustacheExpress())  //Define las vistas de mustache
@@ -16,30 +13,28 @@ app.set('view engine','mustache')
 app.set('views',__dirname + '/vistas')
 
 usuarios = new Users();
-chats = new Chats(); 
- 
-
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-    } 
-);  
+chats = new Chats();
 
 
+app.get('login', (req, res) => {
+    res.render('login')
+     
+});
 
 app.get("/pruebas", (req, res) => {
-    res.render('chats', {chats: [{title: 'Chat 1', id: 1}, {title: 'Chat 2', id: 2}], userId:  1234432});  
-})             
- 
-app.get("/register", (req, res) => {
+    res.render("homePage", {nombre: "Juan", apellido: "Perez"})
+})
+
+app.get("/registro", (req, res) => {
     res.render("registro")
 })
 
-app.get("/homePage", (req, res) => {
+app.get("/", (req, res) => {
     res.render("homePage")
 })
 
 app.get("/chat", (req, res) => {
-    res.render("chat")
+    res.render("chats")
 })
 
 app.get("/login", (req, res) => {
@@ -49,7 +44,6 @@ app.get("/login", (req, res) => {
 // registrar usuario
 app.post('/register', (req, res) => {
     const {username, password} = req.body;
-    console.log(username, password);
     const {error, user} = usuarios.addUser(new Date().getTime(),username, password);
     if(error){
         res.status(400).send({error: true, message: 'Username and password are required!'})
@@ -141,6 +135,7 @@ app.post('/chats/:id/mandarMensaje', (req, res) => {
     }
     res.status(200).send({error: false, message: 'Message sent'});
 });
+
 
 
 app.listen(3000, () => {
