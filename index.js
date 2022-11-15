@@ -19,15 +19,11 @@ usuarios = new Users();
 chats = new Chats(); 
  
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-    } 
-);  
 
 
-
+ 
 app.get("/pruebas", (req, res) => {
-    res.render('chats', {chats: [{title: 'Chat 1', id: 1}, {title: 'Chat 2', id: 2}], userId:  1234432});  
+    res.render('chat', {chats: [{title: 'Chat 1', id: 1}, {title: 'Chat 2', id: 2}], userId:  1234432});  
 })             
  
 app.get("/register", (req, res) => {
