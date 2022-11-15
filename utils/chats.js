@@ -65,3 +65,5 @@ class Chat {
         return {error: true, message: 'Chat not found'}   
     }
 }
+
+module.exports = Chat;

@@ -1,8 +1,8 @@
 const express=require("express")
 const mustacheExpress=require("mustache-express")
 const app=express()
-const {users}=require("./users")
-const {chats}=require("./chats")
+const Users=require("./utils/users") 
+const Chats=require("./utils/chats") 
 app.use(express.static("www"))
 app.use(express.json())
 
@@ -10,8 +10,8 @@ app.engine('mustache',mustacheExpress())  //Define las vistas de mustache
 app.set('view engine','mustache')
 app.set('views',__dirname + '/vistas')
 
-usuarios = new users();
-chats = new chats();
+usuarios = new Users();
+chats = new Chats();
 
 
 app.get('/', (req, res) => {
@@ -21,8 +21,12 @@ app.get('/', (req, res) => {
 
 app.get('login', (req, res) => {
     res.render('login')
-    
+     
 });
+
+app.get("/pruebas", (req, res) => {
+    res.render("homePage", {nombre: "Juan", apellido: "Perez"})
+})
 
 // registrar usuario
 app.post('/register', (req, res) => {

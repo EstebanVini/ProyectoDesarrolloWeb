@@ -44,3 +44,5 @@ class Users {
         return {error: true, message: 'User not found'}   
     }
 }
+
+module.exports = Users;
