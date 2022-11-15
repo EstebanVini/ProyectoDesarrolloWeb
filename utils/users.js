@@ -12,8 +12,8 @@ class Users {
         return {error: false, user};
     }
 
-    removeUser(id){
-        const index = this.users.findIndex((user) => user.id === id);
+    removeUser(name){
+        const index = this.users.findIndex((user) => user.name === name);
         if(index !== -1){
             this.users.splice(index, 1)[0];
             return {error: false, message: 'User removed'}    
@@ -22,8 +22,8 @@ class Users {
 
     }
 
-    addChatToUser(id, chat){
-        const user = this.users.find((user) => user.id === id);
+    addChatToUser(name, chat){
+        const user = this.users.find((user) => user.name === name);
         if(user){
             this.users = user.chats.push(chat);
             return {error: false, message: 'Chat added to user'}    
@@ -35,8 +35,8 @@ class Users {
         return this.users.find((user) => user.name === name);
     }
 
-    changePassword(id, password){
-        const user = this.users.find((user) => user.id === id);
+    changePassword(name, password){
+        const user = this.users.find((user) => user.name === name);
         if(user){
             user.password = password;
             return {error: false, message: 'Password changed'}    
