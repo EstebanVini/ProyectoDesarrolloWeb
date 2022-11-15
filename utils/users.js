@@ -3,7 +3,7 @@ class Users {
         this.users = [];
     }
 
-    addUser(id, name, password){
+    addUser(id, name,  password){
         if(name.trim().length === 0 || password.trim().length === 0){
             return {error: true, message: 'Username and password are required!'}
         }
@@ -45,4 +45,4 @@ class Users {
     }
 }
 
-module.exports = Users;
+module.exports = Users; 
