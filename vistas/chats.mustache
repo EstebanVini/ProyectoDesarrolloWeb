@@ -10,14 +10,42 @@
 </head>
 <body>
     <div class="container">
-        <div class="card">
-            <h5 class="card-header">Featured</h5>
-            <div class="card-body">
-            <h5 class="card-title">Special title treatment</h5>
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a href="#" class="btn btn-primary">Go somewhere</a>
-            </div>
+        <!-- Loop throught messages array and display cards -->
+        <h1>Lista de tus chats</h1>
+        <p>Tu ID es: {{userId}}</p>
+
+        <h3>Crea un nuevo chat:</h3>
+        <div class="row">        
+            <form class="col-lg-5"  action="/login" method="POST">
+                <div class="mb-3">
+                    <label for="exampleInputEmail1" class="form-label">Nombre del chat</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <button type="submit" class="btn btn-success my-2">Submit</button>
+
+
+            </form>
         </div>
-    </div>
+
+
+
+
+        {{#chats}}
+        <div class="row">
+            <div class="card my-2">
+            
+                <div class="card-body">
+                  <h5 class="card-title">{{title}}</h5>
+                  <p class="card-text">{{desc}}</p>
+                  <a href="/chat/{{id}}" class="btn btn-primary">Chatear!</a>
+                </div>
+              </div>
+        </div>
+        {{/chats}}
+    
 </body>
 </html>
