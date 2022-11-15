@@ -11,11 +11,11 @@ app.set('views',__dirname + '/vistas')
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
-    }
+    } 
 );
 
-app.get('login', (req, res) => {
-    res.render('login')
+app.get('/pruebas', (req, res) => {
+    res.render('registro') 
     
 });
 
