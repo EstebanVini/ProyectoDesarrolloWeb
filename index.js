@@ -18,8 +18,9 @@ chats = new Chats();
 var currentUser = null;
 
 usuarios.addUser("admin","admin");
+usuarios.addUser("admin1","admin1");
 currentUser = usuarios.getUser("admin");
-chats.addChat("General","Chat general",currentUser, 1);     
+//chats.addChat("General","Chat general",currentUser, 1);     
  
 
 
@@ -38,11 +39,12 @@ app.get("/", (req, res) => {
 
 
 app.get("/chat/:id", (req, res) => {
-    const chat = chats.getChat(req.params.id);    
-    const title = chat[0].title;    
-    res.render("chat", {title:title, username:currentUser.name, participants:chat[0].users, messages:chat[0].messages})
+    const chat = chats.getChat(req.params.id); 
+    console.log("CHAT: ",chat.messages)
+    
+    res.render("chat", {title:chat.title, username:currentUser.name, participants:chat.users, messages:chat.messages, id:req.params.id})
 }) 
- 
+  
 // Mostramos la pagina de login LISTO
 app.get("/login", (req, res) => {
     res.render("login")
@@ -111,31 +113,27 @@ app.post('/chats', (req, res) => {
     return res.render("chats", {userId: currentUser.name, chats: chats.getChats(currentUser.name)});
 }); 
 
-// eliminar chat
-app.delete('/chats/:id', (req, res) => {
-    const {id} = req.params;
-    const {error, message} = chats.removeChat(id);
-    if(error){
-        res.status(404).send({error: true, message: 'Chat not found'})
-    }
-    res.status(200).send({error: false, message: 'Chat removed'});
-});
+
 
 // agregar usuario a chat
-app.post('/chats/:id', (req, res) => {
+app.post('/chat/:id/add', (req, res) => {
+    
     const {id} = req.params;
     const {name} = req.body;
-    const chat = chats.getChat(id);
+    // const chat = chats.getChat(id);
+    
+   
+
     const {error, message} = chats.addUserToChat(id, name);
     if(error){
         res.status(404).send({error: true, message: 'User not found'})
     }
-    const {chatError, chatMessage} = chats.addChatToUser(name, chat);
-    if(chatError){
-        res.status(404).send({error: true, message: 'Chat not found'})
-    }
+    // const {chatError, chatMessage} = usuarios.addChatToUser(name, chat);
+    // if(chatError){
+    //     res.status(404).send({error: true, message: 'Chat not found'})
+    // }
     
-    res.status(200).send({error: false, message: 'User added to chat'});
+    res.redirect("/chat/"+id);
 });
 
 // eliminar usuario de chat
@@ -159,14 +157,14 @@ app.get('/chats/:id', (req, res) => {
 });
 
 // mandar mensaje a chat
-app.post('/chats/:chatName/mandarMensaje', (req, res) => {
-    const {chatName} = req.params;
-    const {name, mensaje} = req.body;
-    const {error, message: message} = chats.addMessageToChat(chatName, name, mensaje);
+app.post('/chat/:chatName/mandarMensaje', (req, res) => {
+    const {chatName} = req.params.chatName;
+    const {mensaje} = req.body;
+    const {error, message} = chats.addMessageToChat(chatName, currentUser.name, mensaje);
     if(error){
         res.status(404).send({error: true, message: 'Chat or user not found'})
     }
-    res.status(200).send({error: false, message: 'Message sent'});
+    res.redirect(`/chats`);
 });
 
 

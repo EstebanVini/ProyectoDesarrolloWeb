@@ -26,38 +26,33 @@ class Chat {
     }
 
     addUserToChat(id, user){
-        const chat = this.chats.find((chat) => chat.id === id);
+        const chat = this.chats.find((chat) => chat.id == id);
         if(chat){
-            this.chats = chat.users.push(user);
+            this.chats = this.chats.map((item) => {
+                if(item.id == id){
+                    console.log("usuarios antes", item.users)
+                    item.users.push({name: user, password: user, chats:[]});
+                    console.log("usuarios despues", item.users)
+
+                }
+                return item;
+            })
+
+            console.log("chats: ", chat.users)
             return {error: false, message: 'User added to chat'}    
-        }
+        } 
         return {error: true, message: 'Chat not found'}   
     }
 
-    removeUserFromChat(id, user){
-        const chat = this.chats.find((chat) => chat.id === id);
-        if(chat){
-            const index = chat.users.findIndex((user) => user.name === name);
-            if(index !== -1){
-                chat.users.splice(index, 1)[0];
-                return {error: false, message: 'User removed from chat'}
-            }
-            return {error: true, message: 'User not found'}
-        }
-        return {error: true, message: 'Chat not found'}
-    }
-
+  
     getChat(chatId){
+        const chats = this.chats
+        console.log("chats hola: ", typeof(chats))
+        return chats.find((chat) => chat.id == chatId);
+    } 
 
-        const chat = this.chats.map((chat) => {
-            if(chat.id == chatId){
-                return chat;
-            }
-        });        
-        if(chat){
-            return chat;
-        }
-        return null;
+    getAll(){
+        return this.chats;
     }
 
     getChats(userName){
@@ -79,14 +74,7 @@ class Chat {
         return null;
     }
 
-    changeChatName(id, name){
-        const chat = this.chats.find((chat) => chat.id === id);
-        if(chat){
-            chat.name = name;
-            return {error: false, message: 'Chat name changed'}    
-        }
-        return {error: true, message: 'Chat not found'}   
-    }
+    
 
     sendMessage(userMessage, chatName){
         // userMessage = {autor: "djhd", mensaje:"djh"}
