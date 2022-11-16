@@ -52,7 +52,7 @@ app.get("/chats", (req, res) => {
     
 })
 
-// registrar usuario
+// registrar usuario LISTO
 app.post('/register', (req, res) => {
     const {username, password} = req.body;
     const {error, user} = usuarios.addUser(username, password);
@@ -78,9 +78,9 @@ app.post('/login', (req, res) => {
 });
 
 // eliminar usuario
-app.delete('/users/:id', (req, res) => {
-    const {id} = req.params;
-    const {error, message} = usuarios.removeUser(id);
+app.delete('/users/:name', (req, res) => {
+    const {name} = req.params;
+    const {error, message} = usuarios.removeUser(name);
     if(error){
         res.status(404).send({error: true, message: 'User not found'})
     }
@@ -139,10 +139,10 @@ app.get('/chats/:id', (req, res) => {
 });
 
 // mandar mensaje a chat
-app.post('/chats/:id/mandarMensaje', (req, res) => {
-    const {id} = req.params;
+app.post('/chats/:chatName/mandarMensaje', (req, res) => {
+    const {chatName} = req.params;
     const {name, mensaje} = req.body;
-    const {error, message: message} = chats.addMessageToChat(id, name, mensaje);
+    const {error, message: message} = chats.addMessageToChat(chatName, name, mensaje);
     if(error){
         res.status(404).send({error: true, message: 'Chat or user not found'})
     }

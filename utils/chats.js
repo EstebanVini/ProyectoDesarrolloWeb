@@ -69,6 +69,15 @@ class Chat {
         }
         return {error: true, message: 'Chat not found'}           
     }
+
+    addMessageToChat(chatName, name, message){
+        const chat = this.chats.find((chat) => chat.name === chatName);
+        if(chat){
+            chat.messages.push({name, message});
+            return {error: false, message: 'Message added to chat'}    
+        }
+        return {error: true, message: 'Chat not found'}   
+    }
 }
 
 module.exports = Chat;
