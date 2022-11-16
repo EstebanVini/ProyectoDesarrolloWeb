@@ -95,7 +95,7 @@ app.delete('/users/:id', (req, res) => {
     res.status(200).send({error: false, message: 'User removed'});
 });
 
-// crear chat
+// Funcionalidad crear chat LISTO
 app.post('/chats', (req, res) => {
     const {name, desc} = req.body;
     console.log(name, desc) 
