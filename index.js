@@ -33,7 +33,7 @@ app.get("/", (req, res) => {
 })
 
 app.get("/chat", (req, res) => {
-    res.render("chats")
+    res.render("chat")
 })
 
 // Mostramos la pagina de login LISTO
