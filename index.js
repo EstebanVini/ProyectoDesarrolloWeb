@@ -122,10 +122,16 @@ app.delete('/chats/:id', (req, res) => {
 app.post('/chats/:id', (req, res) => {
     const {id} = req.params;
     const {name} = req.body;
+    const chat = chats.getChat(id);
     const {error, message} = chats.addUserToChat(id, name);
     if(error){
-        res.status(404).send({error: true, message: 'Chat or user not found'})
+        res.status(404).send({error: true, message: 'User not found'})
     }
+    const {chatError, chatMessage} = chats.addChatToUser(name, chat);
+    if(chatError){
+        res.status(404).send({error: true, message: 'Chat not found'})
+    }
+    
     res.status(200).send({error: false, message: 'User added to chat'});
 });
 
