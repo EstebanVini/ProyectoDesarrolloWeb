@@ -16,6 +16,10 @@ usuarios = new Users();
 chats = new Chats(); 
 
 var currentUser = null;
+
+usuarios.addUser("admin","admin");
+currentUser = usuarios.getUser("admin");
+chats.addChat("General","Chat general",currentUser);     
  
 
 
@@ -32,6 +36,7 @@ app.get("/", (req, res) => {
     res.render("homePage")
 })
 
+
 app.get("/chat", (req, res) => {
     res.render("chat")
 })
@@ -47,6 +52,7 @@ app.get("/chats", (req, res) => {
     if(currentUser){
         // Buscamos los chats en los que esta el usuario
         const userChats = chats.getChats(currentUser.name);
+        console.log("User chats: ", userChats);
         return res.render("chats", {userId: currentUser.name, chats: userChats});
     } else {
         return res.redirect("/login")
@@ -91,13 +97,16 @@ app.delete('/users/:id', (req, res) => {
 
 // crear chat
 app.post('/chats', (req, res) => {
-    const {name} = req.body;
-    const {error, chat} = chats.addChat(name);
+    const {name, desc} = req.body;
+    console.log(name, desc) 
+    const {error, chat} = chats.addChat(name, desc, currentUser);
+    console.log("Chat creado: ", chat)
     if(error){
-        res.status(400).send({error: true, message: 'Chat name is required!'})
-    }
-    res.status(200).send({error: false, chat});
-});
+        return res.status(400).send({error: true, message: 'Chat name is required!'})
+    }  
+    console.log("chats"+chats.getChats(currentUser.name))
+    return res.render("chats", {userId: currentUser.name, chats: chats.getChats(currentUser.name)});
+}); 
 
 // eliminar chat
 app.delete('/chats/:id', (req, res) => {
