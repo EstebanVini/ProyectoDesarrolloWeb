@@ -3,11 +3,11 @@ class Chat {
         this.chats = [];
     }
 
-    addChat(id, name, users){
+    addChat(name, desc, currentUser){
         if(name.trim().length === 0){
             return {error: true, message: 'Chat name is required!'}
         }
-        const chat = {name, desc, users: [], messages: []};
+        const chat = {title:name, desc, users: [currentUser], messages: []};
         this.chats.push(chat);
         return {error: false, chat};
     }
@@ -43,9 +43,20 @@ class Chat {
         return {error: true, message: 'Chat not found'}
     }
 
-    getChat(userName){
-        const chat = this.chats.find((chat) => chat.users.find((user) => user.name === userName));
+    getChats(userName){
+        // Buscamos el usuario dentro del arreglo de usuarios
+        const chat = this.chats.map((chat) => {
+            const user = chat.users.find((user) => user.name === userName);
+            if(user){
+                console.log(chat)
+                return chat;
+            }
+        });
+        
+        
+        
         if(chat){
+            
             return chat;
         }
         return null;
