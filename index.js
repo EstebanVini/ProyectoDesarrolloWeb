@@ -37,8 +37,8 @@ app.get("/", (req, res) => {
 })
 
 
-app.get("/chat", (req, res) => {
-    res.render("chat")
+app.get("/chat/:id", (req, res) => {
+    res.render("chat", {ussername: currentUser.name, chat: []})
 })
 
 // Mostramos la pagina de login LISTO
