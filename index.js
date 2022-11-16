@@ -14,14 +14,14 @@ app.set('views',__dirname + '/vistas')
 
 usuarios = new Users();
 chats = new Chats(); 
+
+var currentUser = null;
  
 
 
 
  
-app.get("/pruebas", (req, res) => {
-    res.render('chat', {chats: [{title: 'Chat 1', id: 1}, {title: 'Chat 2', id: 2}], userId:  1234432});  
-})             
+ 
  
 app.get("/register", (req, res) => {
     res.render("registro")
@@ -39,8 +39,17 @@ app.get("/login", (req, res) => {
     res.render("login")
 })
 
-app.get("chats", (req, res) => {
-    res.render("chats")
+
+// Hacemos Render de los chats del usuario LISTO
+app.get("/chats", (req, res) => {
+    if(currentUser){
+        // Buscamos los chats en los que esta el usuario
+        const userChats = chats.getChats(currentUser.name);
+        return res.render("chats", {userId: currentUser.name, chats: userChats});
+    } else {
+        return res.redirect("/login")
+    }
+    
 })
 
 // registrar usuario
@@ -53,7 +62,7 @@ app.post('/register', (req, res) => {
     res.render("homePage")
 });
 
-// iniciar sesion
+// iniciar sesion LISTO
 app.post('/login', (req, res) => {
     const {username, password} = req.body;
     console.log(username, password)
