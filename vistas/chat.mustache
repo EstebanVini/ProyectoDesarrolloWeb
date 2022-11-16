@@ -23,6 +23,12 @@
         </form>
 
         <h3>Mensajes: </h3>
+
+        <h3>Mandar mensaje: </h3>
+        <form action="/chat/{{id}}/mandarMensaje" method="POST">
+            <input type="text" name="mensaje" placeholder="Escribir mensaje aquí">
+            <button type="submit" class="btn-small btn-success ">Enviar</button>
+        </form>
         {{#messages}}
         <div>
             <p><strong>{{name}}</strong>: {{message}}</p>
