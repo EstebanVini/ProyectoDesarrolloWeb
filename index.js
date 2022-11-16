@@ -22,11 +22,12 @@ var currentUser = null;
 
  
  
- 
+// Mostramos la pagina de registro LISTO
 app.get("/register", (req, res) => {
     res.render("registro")
 })
 
+// Mostramos la pagina principal LISTO
 app.get("/", (req, res) => {
     res.render("homePage")
 })
@@ -35,6 +36,7 @@ app.get("/chat", (req, res) => {
     res.render("chats")
 })
 
+// Mostramos la pagina de login LISTO
 app.get("/login", (req, res) => {
     res.render("login")
 })
@@ -52,7 +54,7 @@ app.get("/chats", (req, res) => {
     
 })
 
-// registrar usuario
+// registrar usuario LISTO
 app.post('/register', (req, res) => {
     const {username, password} = req.body;
     const {error, user} = usuarios.addUser(username, password);
