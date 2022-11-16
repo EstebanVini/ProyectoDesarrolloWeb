@@ -101,7 +101,8 @@ app.delete('/users/:name', (req, res) => {
 app.post('/chats', (req, res) => {
     const {name, desc} = req.body;
     console.log(name, desc) 
-    const {error, chat} = chats.addChat(name, desc, currentUser, new Date().getTime());
+    const id = Math.floor(Math.random() * 1000);
+    const {error, chat} = chats.addChat(name, desc, currentUser, id);
     console.log("Chat creado: ", chat)
     if(error){
         return res.status(400).send({error: true, message: 'Chat name is required!'})
