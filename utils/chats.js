@@ -60,15 +60,14 @@ class Chat {
         return {error: true, message: 'Chat not found'}   
     }
 
-    sendMessage(name, chatName){
+    sendMessage(userMessage, chatName){
+        // userMessage = {autor: "djhd", mensaje:"djh"}
         const chat = this.chats.find((chat) => chat.name === chatName);
         if(chat){
-            chat.messages.push(message);
+            chat.messages.push(userMessage);
             return {error: false, message: 'Message sent'}    
         }
-        return {error: true, message: 'Chat not found'}   
-
-        
+        return {error: true, message: 'Chat not found'}           
     }
 }
 

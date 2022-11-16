@@ -14,6 +14,8 @@ app.set('views',__dirname + '/vistas')
 
 usuarios = new Users();
 chats = new Chats(); 
+
+var currentUser = null;
  
 
 
@@ -37,13 +39,13 @@ app.get("/login", (req, res) => {
     res.render("login")
 })
 
-// Display all chats
-// Falta buscar los chats donde esta el ususario
 
-
+// Hacemos Render de los chats del usuario LISTO
 app.get("/chats", (req, res) => {
     if(currentUser){
-        return res.render("chats")
+        // Buscamos los chats en los que esta el usuario
+        const userChats = chats.getChats(currentUser.name);
+        return res.render("chats", {userId: currentUser.name, chats: userChats});
     } else {
         return res.redirect("/login")
     }
