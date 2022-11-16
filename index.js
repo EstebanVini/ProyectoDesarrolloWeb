@@ -19,9 +19,7 @@ chats = new Chats();
 
 
  
-app.get("/pruebas", (req, res) => {
-    res.render('chat', {chats: [{title: 'Chat 1', id: 1}, {title: 'Chat 2', id: 2}], userId:  1234432});  
-})             
+ 
  
 app.get("/register", (req, res) => {
     res.render("registro")
@@ -39,21 +37,30 @@ app.get("/login", (req, res) => {
     res.render("login")
 })
 
-app.get("chats", (req, res) => {
-    res.render("chats")
+// Display all chats
+// Falta buscar los chats donde esta el ususario
+
+
+app.get("/chats", (req, res) => {
+    if(currentUser){
+        return res.render("chats")
+    } else {
+        return res.redirect("/login")
+    }
+    
 })
 
 // registrar usuario
 app.post('/register', (req, res) => {
     const {username, password} = req.body;
-    const {error, user} = usuarios.addUser(new Date().getTime(),username, password);
+    const {error, user} = usuarios.addUser(username, password);
     if(error){
         res.status(400).send({error: true, message: 'Username and password are required!'})
     }
     res.render("homePage")
 });
 
-// iniciar sesion
+// iniciar sesion LISTO
 app.post('/login', (req, res) => {
     const {username, password} = req.body;
     console.log(username, password)

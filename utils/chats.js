@@ -7,7 +7,7 @@ class Chat {
         if(name.trim().length === 0){
             return {error: true, message: 'Chat name is required!'}
         }
-        const chat = {id, name, users};
+        const chat = {name, desc, users: [], messages: []};
         this.chats.push(chat);
         return {error: false, chat};
     }
@@ -43,8 +43,12 @@ class Chat {
         return {error: true, message: 'Chat not found'}
     }
 
-    getChat(id){
-        return this.chats.find((chat) => chat.id === id);
+    getChat(userName){
+        const chat = this.chats.find((chat) => chat.users.find((user) => user.name === userName));
+        if(chat){
+            return chat;
+        }
+        return null;
     }
 
     changeChatName(id, name){
@@ -56,13 +60,15 @@ class Chat {
         return {error: true, message: 'Chat not found'}   
     }
 
-    sendMessage(id, mensaje){
-        const chat = this.chats.find((chat) => chat.id === id);
+    sendMessage(name, chatName){
+        const chat = this.chats.find((chat) => chat.name === chatName);
         if(chat){
-            chat.messages.push(mensaje);
+            chat.messages.push(message);
             return {error: false, message: 'Message sent'}    
         }
         return {error: true, message: 'Chat not found'}   
+
+        
     }
 }
 
