@@ -3,14 +3,18 @@ class Chat {
         this.chats = [];
     }
 
-    addChat(name, desc, currentUser){
+    addChat(name, desc, currentUser, id){
         if(name.trim().length === 0){
             return {error: true, message: 'Chat name is required!'}
         }
-        const chat = {title:name, desc, users: [currentUser], messages: []};
+        const chat = {id, title:name, desc, users: [currentUser], messages: []};
         this.chats.push(chat);
         return {error: false, chat};
     }
+
+   
+    
+    
 
     removeChat(id){
         const index = this.chats.findIndex((chat) => chat.id === id);
@@ -41,6 +45,19 @@ class Chat {
             return {error: true, message: 'User not found'}
         }
         return {error: true, message: 'Chat not found'}
+    }
+
+    getChat(chatId){
+
+        const chat = this.chats.map((chat) => {
+            if(chat.id == chatId){
+                return chat;
+            }
+        });        
+        if(chat){
+            return chat;
+        }
+        return null;
     }
 
     getChats(userName){
